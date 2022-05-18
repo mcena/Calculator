@@ -1,7 +1,6 @@
 package org.example.impl;
 
 import org.example.Utility.Calculator;
-import org.example.Utility.CalculatorUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,15 +13,28 @@ public class CalculatorImpl implements ActionListener {
 
     private JTextField textField;
 
-    private JButton[] functionButtons;
-    private  JButton[] numberButtons;
+    private JButton[] functionButtons = new JButton[9];
+    private  JButton[] numberButtons = new JButton[10];
+
+    private final Calculator calculator;
+
+    public CalculatorImpl(Calculator calculator) {
+        this.calculator = calculator;
+        this.textField = calculator.getTextField();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
-        Calculator calculator = initActionListener();
+
+        for(int i = 0; i<9; ++i){
+            this.functionButtons[i] = calculator.getFunctionButtons()[i];
+        }
+        for(int i = 0; i<10; ++i){
+            this.numberButtons[i] = calculator.getNumberButtons()[i];
+        }
 
         for(int i = 0; i < 10; ++i) {
             if (e.getSource() == calculator.getNumberButtons()[i]) {
-                this.textField.setText(calculator.getTextField().getText().concat(String.valueOf(i)));
+                calculator.getTextField().setText(calculator.getTextField().getText().concat(String.valueOf(i)));
             }
         }
 
@@ -33,25 +45,25 @@ public class CalculatorImpl implements ActionListener {
         if (e.getSource() == calculator.getAddButton()) {
             this.num1 = Double.parseDouble(calculator.getTextField().getText());
             this.operator = '+';
-            this.textField.setText("");
+            calculator.getTextField().setText("");
         }
 
         if (e.getSource() == calculator.getSubButton()) {
             this.num1 = Double.parseDouble(calculator.getTextField().getText());
             this.operator = '-';
-            this.textField.setText("");
+            calculator.getTextField().setText("");
         }
 
         if (e.getSource() == calculator.getMulButton()) {
             this.num1 = Double.parseDouble(calculator.getTextField().getText());
             this.operator = '*';
-            this.textField.setText("");
+            calculator.getTextField().setText("");
         }
 
         if (e.getSource() == calculator.getDivButton()) {
             this.num1 = Double.parseDouble(calculator.getTextField().getText());
             this.operator = '/';
-            this.textField.setText("");
+            calculator.getTextField().setText("");
         }
 
         if (e.getSource() == calculator.getEquButton()) {
@@ -78,12 +90,12 @@ public class CalculatorImpl implements ActionListener {
         }
 
         if (e.getSource() == calculator.getClrButton()) {
-            this.textField.setText("");
+            calculator.getTextField().setText("");
         }
 
         if (e.getSource() == calculator.getDelButton()) {
             String string = calculator.getTextField().getText();
-            this.textField.setText("");
+            calculator.getTextField().setText("");
 
             for(int i = 0; i < string.length() - 1; ++i) {
                 JTextField var10000 = calculator.getTextField();
@@ -95,24 +107,7 @@ public class CalculatorImpl implements ActionListener {
         if (e.getSource() == calculator.getNegButton()) {
             double temp = Double.parseDouble(calculator.getTextField().getText());
             temp *= -1.0;
-            this.textField.setText(String.valueOf(temp));
+            calculator.getTextField().setText(String.valueOf(temp));
         }
-    }
-
-    private Calculator initActionListener(){
-        CalculatorUI calculatorUI = new CalculatorUI();
-        Calculator calculator = calculatorUI.getCalculator();
-        functionButtons = calculator.getFunctionButtons();
-        numberButtons = calculator.getNumberButtons();
-        textField = calculator.getTextField();
-
-        for(int i = 0; i<9; ++i){
-            functionButtons[i].addActionListener(this);
-            System.out.println(functionButtons [i].getName());
-        }
-        for(int i = 0; i<10; ++i){
-            numberButtons[i].addActionListener(this);
-        }
-        return calculator;
     }
 }

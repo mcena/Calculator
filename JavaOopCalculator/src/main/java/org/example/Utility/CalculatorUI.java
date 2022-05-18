@@ -1,7 +1,10 @@
 package org.example.Utility;
 
+import org.example.impl.CalculatorImpl;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 
 public class CalculatorUI {
@@ -21,7 +24,7 @@ public class CalculatorUI {
     private JPanel panel;
     private Font myFont = new Font("Castellar", 1, 30);
 
-    private Calculator calculator;
+
 
     public void initUserInterface(){
         this.frame.setDefaultCloseOperation(3);
@@ -50,8 +53,7 @@ public class CalculatorUI {
         this.functionButtons[7] = this.clrButton;
         this.functionButtons[8] = this.negButton;
 
-        //calculator = new Calculator();
-        initButtons(calculator);
+        Calculator calculator = initButtons();
         initFont();
 
         this.negButton.setBounds(50, 430, 110, 50);
@@ -82,6 +84,14 @@ public class CalculatorUI {
         this.frame.add(this.clrButton);
         this.frame.add(this.textField);
         this.frame.setVisible(true);
+
+        ActionListener actionListener = new CalculatorImpl(calculator);
+        for(int i = 0; i<9; ++i){
+            functionButtons[i].addActionListener(actionListener);
+        }
+        for(int i = 0; i<10; ++i){
+            numberButtons[i].addActionListener(actionListener);
+        }
     }
 
     private void initFont(){
@@ -98,8 +108,9 @@ public class CalculatorUI {
         }
     }
 
-    private Calculator initButtons(Calculator calculator){
-        calculator = new Calculator();
+    private Calculator initButtons(){
+        Calculator calculator = new Calculator();
+        calculator.setTextField(textField);
         calculator.setAddButton(addButton);
         calculator.setSubButton(subButton);
         calculator.setDivButton(divButton);
@@ -114,11 +125,4 @@ public class CalculatorUI {
 
         return calculator;
     }
-
-    public Calculator getCalculator(){
-        return calculator;
-    }
-
-
-
 }

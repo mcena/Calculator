@@ -5,6 +5,15 @@ import javax.swing.*;
 public class Calculator {
     private JButton[] functionButtons = new JButton[9];
     private JButton[] numberButtons = new JButton[10];
+    private JButton addButton;
+    private JButton subButton;
+    private JButton mulButton;
+    private JButton divButton;
+    private JButton decButton;
+    private JButton equButton;
+    private JButton delButton;
+    private JButton clrButton;
+    private JButton negButton;
 
     public JButton getAddButton() {
         return addButton;
@@ -77,16 +86,6 @@ public class Calculator {
     public void setNegButton(JButton negButton) {
         this.negButton = negButton;
     }
-
-    private JButton addButton;
-    private JButton subButton;
-    private JButton mulButton;
-    private JButton divButton;
-    private JButton decButton;
-    private JButton equButton;
-    private JButton delButton;
-    private JButton clrButton;
-    private JButton negButton;
 
 
     public JTextField getTextField() {
